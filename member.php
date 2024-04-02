@@ -73,14 +73,27 @@ class Member implements CRUD{
 }
 
     public function deleteMember($id){
-    }  
+        try{
+            $sql="DELETE FROM Member WHERE id= :id";
+            $stmt=$this->connexion->prepare($sql);
+            $stmt->bindParam(':id',$id,PDO::PARAM_INT);
+            $stmt->execute();
+            header('location:index.php');
+        }catch(PDOException $e){
+    
+            die("erreur: impossible de faire la suppression" .$e->getMessage());
+        }
+            
+        }
+    
     
     public function updateMember($first_name, $last_name,$matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut){
+        
     }
     public function readMember(){
         try{
             //Requête d'insertion
-            $sql= "SELECT * FROM Student";
+            $sql= "SELECT * FROM Member";
             //Préparation de la requête
             $stmt=$this->connexion->prepare($sql);
             //Exécution de la requete
@@ -95,3 +108,4 @@ class Member implements CRUD{
         }
     }
 }
+

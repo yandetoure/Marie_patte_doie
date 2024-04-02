@@ -43,7 +43,8 @@ require_once 'header.php'
                     echo '<p class="card-text">Situation matrimoniale: ' . $row['situation_matrimoniale'] . '</p>';
                     echo '<p class="card-text">Statut: ' . $row['statut'] . '</p>';
                     echo '<a href="#" class="btn btn-primary">Modifier</a>';
-                    echo '<a href="#" class="btn btn-danger">Supprimer</a>';
+                    //  echo '<a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger">';  
+                    echo ' <a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger">supprimer</a>';              
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';
