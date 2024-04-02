@@ -1,5 +1,5 @@
 <?php
-require('server.php');
+require('config.php');
 ?>
 <head>
     <meta charset="UTF-8">

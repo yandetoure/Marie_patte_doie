@@ -1,3 +1,8 @@
+<?php
+//Inclusion de la page de configuration de la base de données et du header.
+include 'config.php';
+require_once 'header.php'
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -18,7 +23,6 @@
     <div class="row">
         <?php
         // Inclure le fichier de configuration avec les paramètres de connexion à la base de données
-        include 'config.php';
 
         try {
             // Requête pour sélectionner tous les membres de la base de données
