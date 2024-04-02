@@ -9,10 +9,10 @@ require('config.php');
 <header class="header">
     <nav class="nav-bar">
         <ul class="nav-bar-btn">
-            <li class="btn"><a href="accueil.php">Accueil</a></li> 
-            <li class="btn"><a href="idee.php">Ajouter une Idée</a></li>   
+            <li class="btn"><a href="index.php">Accueil</a></li> 
+            <li class="btn"><a href="add.php">Ajouter un membre</a></li>   
             <li class="btn"><a href="profil.php">Mon profil</a></li>  
-            <li class="btn"><a href="mes_idees.php">Mes idées</a></li> 
+            <li class="btn"><a href="mes_idees.php">Mes ajouts</a></li> 
         </ul>
     </nav>
     </header>
