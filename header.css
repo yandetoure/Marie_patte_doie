@@ -1,0 +1,26 @@
+
+.nav-bar{
+    /*padding-left: 500px;*/
+    font-size: 18px;
+    background-color: #5bd8d8;
+    line-height: 2.5;
+    margin-bottom: 10px;
+    margin-top: 50px;
+}
+
+.nav-bar-btn{
+    display: flex;
+    margin: 0% 0% 0% 50%;
+    list-style: none;
+
+}
+.btn{
+    a{
+        font-weight: bold;
+        text-decoration: none;
+        padding: 10px;
+        font-size: 20px;
+        margin-right: 25px;
+        color: black;
+    }
+}
