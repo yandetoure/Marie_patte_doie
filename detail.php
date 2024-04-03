@@ -61,11 +61,17 @@ if(isset($_GET['id'])){
 
         try {
             // Requête pour sélectionner tous les membres de la base de données
-            $sql = "SELECT * FROM Member WHERE id = :id";
+            // $sql = "SELECT * FROM Member WHERE id = :id";
+            $sql = "SELECT * FROM Member
+            JOIN statuts ON (Member.id_status=statuts.id_status)
+            JOIN etats ON (Member.id_etat=etats.id_etat)
+            JOIN  tranche_ages ON (tranche_ages.tranche_age_id=Member.tranche_age_id)
+            WHERE id = :id  
+            ";
             $stmt = $connexion->prepare($sql);
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+             $stmt->bindParam(':id',$id, PDO::PARAM_INT);
             $stmt->execute();
-
+            // return var_dump($id);
             // Vérifier si des membres sont retournés
             if ($stmt->rowCount() > 0) {
                 // Afficher les membres dans des cartes Bootstrap
@@ -81,7 +87,7 @@ if(isset($_GET['id'])){
                     echo '<p class="card-text"Stutu :>Statut: ' . $row['statut'] . '</p>';
                     echo '<a href="update.php?id=' . $row['id'] . '" class="btn btn-primary">Modifier</a>';  
                     echo '<a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger">Supprimer</a>';   
-                    echo '<a href="delete.php?id=' . $row['id'] . '" class="btn btn-info">Afficher plus</a>';             
+                    // echo '<a href="detail.php?id=' . $row['id'] . '" class="btn btn-info">Afficher plus</a>';             
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';
