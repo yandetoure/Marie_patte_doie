@@ -90,32 +90,35 @@ class Member implements CRUD{
         }
     
     
-    public function updateMember($id,$first_name, $last_name,$matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut){
-        
+        public function updateMember($id, $first_name, $last_name, $matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut) {
             try {
-                $sql= "UPDATE Member SET first_name= :first_name, last_name = :last_name, matricule = :matricule ,  tranche_age= :tranche_age ,sexe= :sexe, situation_matrimoniale = : situation_matrimoniale ,statut= :statut WHERE id = :id";
+                // Requête SQL UPDATE pour mettre à jour les informations du membre
+                $sql = "UPDATE Member SET first_name = :first_name, last_name = :last_name, matricule = :matricule, tranche_age = :tranche_age, sexe = :sexe, situation_matrimoniale = :situation_matrimoniale, statut = :statut WHERE id = :id";
+        
+                // Préparation de la requête
                 $stmt = $this->connexion->prepare($sql);
         
-                //Liaison des valeurs et des paramétres
-                $stmt->bindParam(':id',$id, PDO::PARAM_INT);
-                $stmt->bindParam(':first_name', $first_name, PDO::PARAM_STR);
-                $stmt->bindParam(':last_name', $last_name, PDO::PARAM_STR);
-                $stmt->bindParam(':matricule', $matricule, PDO::PARAM_STR);
-                $stmt->bindParam('tranche_age', $tranche_age, PDO::PARAM_STR);
-                $stmt->bindParam(':sexe', $sexe,PDO::PARAM_STR);
-                $stmt->bindParam(':situation_matrimoniale', $situation_matrimoniale, PDO::PARAM_STR);
-                $stmt->bindParam(':statut', $statut, PDO::PARAM_STR);
+                // Liaison des valeurs aux paramètres
+                $stmt->bindParam(':first_name', $first_name);
+                $stmt->bindParam(':last_name', $last_name);
+                $stmt->bindParam(':matricule', $matricule);
+                $stmt->bindParam(':tranche_age', $tranche_age);
+                $stmt->bindParam(':sexe', $sexe);
+                $stmt->bindParam(':situation_matrimoniale', $situation_matrimoniale);
+                $stmt->bindParam(':statut', $statut);
+                $stmt->bindParam(':id', $id);
         
-                //Exécution de la requête
+                // Exécution de la requête
                 $stmt->execute();
-                return true;
-                //redirection vers la page index.php
-                header ('location:index.php');
         
+                // Redirection vers la page index.php après la mise à jour
+                header("Location: index.php");
+                exit();
             } catch (PDOException $e) {
-                echo "Erreur lors de la modification : " . $e->getMessage();
+                echo "Erreur lors de la mise à jour de l'enregistrement : " . $e->getMessage();
             }
         }
+        
     public function readMember(){
         try{
             //Requête d'insertion

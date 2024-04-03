@@ -4,8 +4,9 @@
 require_once 'header.php';
 require_once 'config.php';
 require_once 'member.php';
-if (isset($_POST['submit'])) {
-//Récupération des données du formulaire
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Récupération des données du formulaire
     $id = $_GET['id']; 
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
@@ -15,15 +16,54 @@ if (isset($_POST['submit'])) {
     $situation_matrimoniale = $_POST['situation_matrimoniale'];
     $statut = $_POST['statut'];
 
-        //Appel de la methode updateMember
-$member->updateMember ($id,$first_name, $last_name,$matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut);
+    // Appel de la méthode updateMember
+    $member = new Member($connexion, $first_name, $last_name, $matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut);
+    $member->updateMember($id, $first_name, $last_name, $matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut);
 
- //rediriger la page vers index
- header("location: index.php");
- exit();
+    // Rediriger la page vers index.php
+    header("location: index.php");
+    exit();
+    
+}else[
+    var_dump($first_name,$last_name,$matricule)
+]
 
-}
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier un membre</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <?php 
+    // Requête SQL pour sélectionner les données du membre à partir de son ID
+    $id = $_GET['id'];
+    $sql = "SELECT * FROM Member WHERE id = :id";
+    // Préparation de la requête
+    $stmt = $connexion->prepare($sql);
+    // Liaison des valeurs aux paramètres
+    $stmt->bindParam(':id', $_GET['id'], PDO::PARAM_INT);
+    // Exécution de la requête
+    if ($stmt->execute()) {
+        // Récupération des données du membre
+        $member = $stmt->fetch(PDO::FETCH_ASSOC);
+        // Affectation des données aux variables
+        $first_name = $member['first_name'];
+        $last_name = $member['last_name'];
+        $matricule = $member['matricule'];
+        $tranche_age = $member['tranche_age'];
+        $sexe = $member['sexe'];
+        $situation_matrimoniale = $member['situation_matrimoniale'];
+        $statut = $member['statut'];
+    } else {
+        echo "Erreur lors de la récupération des données";
+    }
+    ?>
 
 
 <!DOCTYPE html>
