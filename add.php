@@ -47,8 +47,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <div class="form-group">
     <label for="tranche_age">Tranche d'âge:</label>
     <select class="form-control" id="tranche_age" name="tranche_age">
-        <option value="10-15">0 - 10 ans</option>
-        <option value="15-20">10 - 18 ans</option>
+        <option value="O-10 ">0 - 10 ans</option>
+        <option value="10-18">10 - 18 ans</option>
         <option value="18-35">18 - 35 ans</option>
         <option value="35-45">35 - 45 ans</option>
         <option value="45-65">45 - 65 ans</option>
