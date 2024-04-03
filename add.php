@@ -3,7 +3,6 @@
 //Inclusion de la page de configuration et de la page member et du header
 require_once 'header.php';
 require_once 'config.php';
-require_once 'member.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 //Récupération des données du formulaire
     $first_name = $_POST['first_name'];
