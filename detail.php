@@ -42,10 +42,10 @@ if(isset($_GET['id'])){
             if ($stmt->rowCount() > 0) {
                 // Afficher les membres dans des cartes Bootstrap
                 while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo '<div class="col-md-8">';
+                    echo '<div class="col-md-6">';
                     echo '<div class="card membre-card">';
                     echo '<h2 class="card-title"> Les informations de ' . $row['first_name'] . ' ' . $row['last_name'] . '</h2>';
-                    echo '<div class="card-body">';
+                    echo '<div class="card-body texte-center">';
                     echo '<h5 class="card-title">' . $row['first_name'] . ' ' . $row['last_name'] . '</h5>';
                     echo '<p class="card-text">Tranche d\'âge: ' . $row['tranche_age'] . '</p>';
                     echo '<p class="card-text">Sexe: ' . $row['sexe'] . '</p>';
@@ -53,7 +53,7 @@ if(isset($_GET['id'])){
                     echo '<p class="card-text">Statut: ' . $row['statut'] . '</p>';
                     echo ' <a href="update.php?id=' . $row['id'] . '" class="btn btn-primary">Modifier</a>';  
                     echo ' <a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger">supprimer</a>';   
-                    echo ' <a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger">Afficher plus</a>';             
+                    echo ' <a href="delete.php?id=' . $row['id'] . '" class="btn btn-info">Afficher plus</a>';             
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';

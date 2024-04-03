@@ -3,6 +3,7 @@
 //Inclusion de la page de configuration et de la page member et du header
 require_once 'header.php';
 require_once 'config.php';
+require_once 'member.php';
 if (isset($_POST['submit'])) {
 //Récupération des données du formulaire
     $id = $_GET['id']; 
@@ -37,10 +38,8 @@ $member->updateMember ($id,$first_name, $last_name,$matricule, $tranche_age, $se
 <body>
     <?php 
                 //requete sql pour selectionner les données de l'etudiant à partir de son id 
-
+                $id = $_GET['id'];
                 $sql = "SELECT * FROM Member WHERE id = :id   ";
-
-
                 //prepareation de la requete
                 $stmt=$connexion ->prepare($sql);
 
