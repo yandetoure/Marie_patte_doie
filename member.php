@@ -110,7 +110,6 @@ class Member implements CRUD{
         
                 // Exécution de la requête
                 $stmt->execute();
-        
                 // Redirection vers la page index.php après la mise à jour
                 header("Location: index.php");
                 exit();
@@ -122,7 +121,12 @@ class Member implements CRUD{
     public function readMember(){
         try{
             //Requête d'insertion
-            $sql= "SELECT * FROM Member";
+            // $sql= "SELECT * FROM Member";
+            $sql = "SELECT * FROM Member
+            JOIN statuts ON (Member.id_status=statuts.id_status)
+            JOIN etats ON (Member.id_etat=etats.id_etat)
+            JOIN  tranche_ages ON (tranche_ages.tranche_age_id=Member.tranche_age_id);
+            ";
             //Préparation de la requête
             $stmt=$this->connexion->prepare($sql);
             //Exécution de la requete

@@ -21,7 +21,11 @@ require_once 'header.php'
 
         try {
             // Requête pour sélectionner tous les membres de la base de données
-            $sql = "SELECT * FROM Member";
+            $sql = "SELECT * FROM Member
+            JOIN statuts ON (Member.id_status=statuts.id_status)
+            JOIN etats ON (Member.id_etat=etats.id_etat)
+            JOIN  tranche_ages ON (tranche_ages.tranche_age_id=Member.tranche_age_id);
+            ";
             $stmt = $connexion->prepare($sql);
             $stmt->execute();
 
