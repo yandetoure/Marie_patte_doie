@@ -133,5 +133,14 @@ class Member implements CRUD{
             echo "Erreur: " . $e->getMessage();
         }
     }
+
+    public function afficher(){
+        try{
+            //Requete sql
+            $sql = "SELECT * FROM Member WHERE :id = id";
+        }catch(PDOException $e){
+
+        }
+    }
 }
 

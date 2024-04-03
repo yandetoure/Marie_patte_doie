@@ -20,7 +20,7 @@ try{
     $situation_matrimoniale ="";
     $statut ="";
 
-    $membre = new Member ($connexion, $first_name, $last_name,$matricule,$tranche_age,$situation_matrimoniale,$sexe,$statut);
+    $member = new Member ($connexion, $first_name, $last_name,$matricule,$tranche_age,$situation_matrimoniale,$sexe,$statut);
     $resultat = $member->readMember();
 
 } catch (PDOException $e) {

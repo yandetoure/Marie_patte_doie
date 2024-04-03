@@ -5,7 +5,7 @@ require_once 'header.php';
 require_once 'config.php';
 if (isset($_POST['submit'])) {
 //Récupération des données du formulaire
-     $_GET['id']= $id;
+    $id = $_GET['id']; 
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $matricule = $_POST['matricule'];
@@ -23,6 +23,7 @@ $member->updateMember ($id,$first_name, $last_name,$matricule, $tranche_age, $se
 
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
