@@ -15,27 +15,55 @@ if(isset($_GET['id'])){
     <title>Liste des membres</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .membre-card {
+            border: 1px solid #ced4da;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .membre-card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .card-body {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .btn {
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container mt-5">
-    <?php ?>
-    <div class="row">
-        <style>
-             card-body{
-                background-color:red;
-            }
-        </style>
+    <h2 class="text-center mb-4">Information personnelles</h2>
+    <div class="row justify-content-center">
         <?php
         // Inclure le fichier de configuration avec les paramètres de connexion à la base de données
+        include 'config.php';
+        require_once 'header.php';
 
         try {
             // Requête pour sélectionner tous les membres de la base de données
             $sql = "SELECT * FROM Member WHERE id = :id";
             $stmt = $connexion->prepare($sql);
-            $stmt->bindParam('id',$id,PDO::PARAM_INT);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
 
             // Vérifier si des membres sont retournés
@@ -44,16 +72,16 @@ if(isset($_GET['id'])){
                 while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo '<div class="col-md-6">';
                     echo '<div class="card membre-card">';
-                    echo '<h2 class="card-title"> Les informations de ' . $row['first_name'] . ' ' . $row['last_name'] . '</h2>';
-                    echo '<div class="card-body texte-center">';
-                    echo '<h5 class="card-title">' . $row['first_name'] . ' ' . $row['last_name'] . '</h5>';
-                    echo '<p class="card-text">Tranche d\'âge: ' . $row['tranche_age'] . '</p>';
+                    echo '<div class="card-body">';
+                    echo '<h5 class="card-title"  > Prenom : <strong> ' . $row['first_name'] . ' </strong> </h5>';
+                    echo '<h5 class="card-title"  > Nom : '  . $row['last_name'] . '</h5>';
+                    echo '<p class="card-text"Tranche d\'âge : >Tranche d\'âge: ' . $row['tranche_age'] . '</p>';
                     echo '<p class="card-text">Sexe: ' . $row['sexe'] . '</p>';
-                    echo '<p class="card-text">Situation matrimoniale: ' . $row['situation_matrimoniale'] . '</p>';
-                    echo '<p class="card-text">Statut: ' . $row['statut'] . '</p>';
-                    echo ' <a href="update.php?id=' . $row['id'] . '" class="btn btn-primary">Modifier</a>';  
-                    echo ' <a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger">supprimer</a>';   
-                    echo ' <a href="delete.php?id=' . $row['id'] . '" class="btn btn-info">Afficher plus</a>';             
+                    echo '<p class="card-text"Situation matrimoniale : >Situation matrimoniale: ' . $row['situation_matrimoniale'] . '</p>';
+                    echo '<p class="card-text"Stutu :>Statut: ' . $row['statut'] . '</p>';
+                    echo '<a href="update.php?id=' . $row['id'] . '" class="btn btn-primary">Modifier</a>';  
+                    echo '<a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger">Supprimer</a>';   
+                    echo '<a href="delete.php?id=' . $row['id'] . '" class="btn btn-info">Afficher plus</a>';             
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';

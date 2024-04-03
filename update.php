@@ -26,6 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
 }
 
+       //Appel de la methode addMember
+        $member->addMember($first_name,$last_name,$matricule,$tranche_age,$sexe,$situation_matrimoniale,$statut);
+
 ?>
 
 <!DOCTYPE html>
@@ -159,4 +162,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </form>
     </div>
 </body>
+
 </html>
+
+</html>
+
