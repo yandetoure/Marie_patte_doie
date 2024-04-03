@@ -10,11 +10,6 @@ require_once 'header.php'
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des membres</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .membre-card {
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 <body>
 
@@ -42,9 +37,9 @@ require_once 'header.php'
                     echo '<p class="card-text">Sexe: ' . $row['sexe'] . '</p>';
                     echo '<p class="card-text">Situation matrimoniale: ' . $row['situation_matrimoniale'] . '</p>';
                     echo '<p class="card-text">Statut: ' . $row['statut'] . '</p>';
-                    echo '<a href="#" class="btn btn-primary">Modifier</a>';
-                    //  echo '<a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger">';  
-                    echo ' <a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger">supprimer</a>';              
+                    echo ' <a href="update.php?id=' . $row['id'] . '" class="btn btn-primary">Modifier</a>';  
+                    echo ' <a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger">supprimer</a>';   
+                    echo ' <a href="detail.php?id=' . $row['id'] . '" class="btn btn-info">Afficher plus</a>';             
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';
