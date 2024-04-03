@@ -136,8 +136,6 @@ class Member implements CRUD{
             echo "Erreur: " . $e->getMessage();
         }
     }
-<<<<<<< HEAD
-=======
 
     public function afficher(){
         try{
@@ -148,14 +146,4 @@ class Member implements CRUD{
         }
     }
 }
->>>>>>> refs/remotes/origin/main
 
-    public function afficher(){
-        try{
-            //Requete sql
-            $sql = "SELECT * FROM Member WHERE :id = id";
-        }catch(PDOException $e){
-
-        }
-    }
-}
