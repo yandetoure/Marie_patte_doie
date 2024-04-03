@@ -47,30 +47,33 @@ class Member implements CRUD{
     }
 
     //Déclaration des méthodes
-    public function addMember($first_name, $last_name,$matricule , $tranche_age, $sexe, $situation_matrimoniale, $statut){
-        $sql= "INSERT INTO Member (first_name,last_name,matricule,tranche_age,sexe,situation VALUES(:first_name,:last_name,:matricule ,:sexe,:situation_matrimoniale,:statut)";
-
+    public function addMember($first_name, $last_name, $matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut){
+        $sql = "INSERT INTO Member (first_name, last_name, matricule, tranche_age, sexe, situation_matrimoniale, statut) VALUES (:first_name, :last_name, :matricule, :tranche_age, :sexe, :situation_matrimoniale, :statut)";
+    
         //Préparation de la requête
         try {
-        $requete = $this->connexion->prepare($sql);
-
-        //Liaison des valeurs et des paramétres
-        $requete->bindParam(':first_name', $first_name);
-        $requete->bindParam(':last_name', $last_name);
-        $requete->bindParam('tranche_age', $tranche_age);
-        $requete->bindParam(':sexe', $sexe);
-        $requete->bindParam(':situation_matrimoniale', $situation_matrimoniale);
-        $requete->bindParam(':statut', $statut);
-
-        //Exécution de la requête
-        $requete->execute();
-        //redirection vers la page index.php
-        header('Location: index.php');
-
-    } catch (PDOException $e) {
-        echo "Erreur lors de l'insertion de l'enregistrement : " . $e->getMessage();
+            $requete = $this->connexion->prepare($sql);
+    
+            //Liaison des valeurs et des paramètres
+            $requete->bindParam(':first_name', $first_name);
+            $requete->bindParam(':last_name', $last_name);
+            $requete->bindParam(':matricule', $matricule);
+            $requete->bindParam(':tranche_age', $tranche_age, PDO::PARAM_STR); // Spécifier le type de paramètre
+            $requete->bindParam(':sexe', $sexe);
+            $requete->bindParam(':situation_matrimoniale', $situation_matrimoniale);
+            $requete->bindParam(':statut', $statut);
+    
+            //Exécution de la requête
+            $requete->execute();
+    
+            //redirection vers la page index.php
+            header('Location: index.php');
+    
+        } catch (PDOException $e) {
+            echo "Erreur lors de l'insertion de l'enregistrement : " . $e->getMessage();
+        }
     }
-}
+    
 
     public function deleteMember($id){
         try{
