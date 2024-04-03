@@ -24,9 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     header("location: index.php");
     exit();
     
-}else[
-    var_dump($first_name,$last_name,$matricule)
-]
+}
 
 ?>
 
