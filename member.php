@@ -50,7 +50,7 @@ class Member implements CRUD{
 
     //Déclaration des méthodes
     public function addMember($first_name, $last_name, $matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut,$etat){
-        $sql = "INSERT INTO Member (first_name, last_name, matricule, tranche_age, sexe, situation_matrimoniale, statut,etat) VALUES (:first_name, :last_name, :matricule, :tranche_age, :sexe, :situation_matrimoniale, :statut ,:etat)";
+        $sql = "INSERT INTO Member (first_name, last_name, matricule, tranche_age_id, sexe, situation_matrimoniale, id_status,id_etat) VALUES (:first_name, :last_name, :matricule, :tranche_age_id, :sexe, :situation_matrimoniale, :id_status ,:id_etat)";
     
         //Préparation de la requête
         try {
@@ -60,7 +60,7 @@ class Member implements CRUD{
             $requete->bindParam(':first_name', $first_name);
             $requete->bindParam(':last_name', $last_name);
             $requete->bindParam(':matricule', $matricule);
-            $requete->bindParam(':tranche_age', $tranche_age, PDO::PARAM_STR); // Spécifier le type de paramètre
+            $requete->bindParam(':tranche_age_id', $tranche_age); // Spécifier le type de paramètre
             $requete->bindParam(':sexe', $sexe);
             $requete->bindParam(':situation_matrimoniale', $situation_matrimoniale);
             $requete->bindParam(':id_status', $statut);
