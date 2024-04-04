@@ -11,23 +11,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $matricule = $_POST['matricule'];
-    $tranche_age = $_POST['tranche_age'];
+    $tranche_age = $_POST['tranche_age_id'];
     $sexe = $_POST['sexe'];
     $situation_matrimoniale = $_POST['situation_matrimoniale'];
-    $statut = $_POST['statut'];
+    $statut = $_POST['id_status'];
+    $etat = $_POST['id_etat'];
 
     // Appel de la méthode updateMember
-    $member = new Member($connexion, $first_name, $last_name, $matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut);
-    $member->updateMember($id, $first_name, $last_name, $matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut);
-
+    $member = new Member($connexion, $first_name, $last_name, $matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut,$etat);
+    $member->updateMember($id, $first_name, $last_name, $matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut,$etat);
+     
     // Rediriger la page vers index.php
     header("location: index.php");
     exit();
     
 }
 
-       //Appel de la methode addMember
-        $member->addMember($first_name,$last_name,$matricule,$tranche_age,$sexe,$situation_matrimoniale,$statut);
+    //    //Appel de la methode addMember
+    //     $member->addMember($first_name,$last_name,$matricule,$tranche_age,$sexe,$situation_matrimoniale,$statut,$etat);
 
 ?>
 
@@ -57,53 +58,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $first_name = $member['first_name'];
         $last_name = $member['last_name'];
         $matricule = $member['matricule'];
-        $tranche_age = $member['tranche_age'];
+        $tranche_age = $member['tranche_age_id'];
         $sexe = $member['sexe'];
         $situation_matrimoniale = $member['situation_matrimoniale'];
-        $statut = $member['statut'];
+        $statut = $member['id_status'];
+        $etat = $member['id_etat'];
     } else {
         echo "Erreur lors de la récupération des données";
     }
     ?>
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un nouveau membre</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <?php 
-                //requete sql pour selectionner les données de l'etudiant à partir de son id 
-                $id = $_GET['id'];
-                $sql = "SELECT * FROM Member WHERE id = :id   ";
-                //prepareation de la requete
-                $stmt=$connexion ->prepare($sql);
-
-                //liaison des valeurs aux parametre
-                $stmt->bindParam(':id', $_GET['id'], PDO::PARAM_INT);
-
-
-                //execution de la requete
-                if($stmt->execute()){
-                    //preparation du resultat
-                    $member=$stmt->fetch(PDO::FETCH_ASSOC);
-                    //recuperation des donnés des membres
-                     $first_name=$member['first_name'];
-                     $last_name=$member['last_name'];
-                     $matricule=$member['matricule'];
-                     $tranche_age=$member['tranche_age'];
-                     $sexe=$member['sexe'];
-                     $situation_matrimoniale=$member['situation_matrimoniale'];
-                     $statut=$member['statut'];
-                }else{
-                    echo"Erreur lors de la recuperation des données";
-                }
-            ?>
+<!--  -->
 
     
     
@@ -125,13 +91,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
             <div class="form-group">
     <label for="tranche_age">Tranche d'âge:</label>
-    <select class="form-control" id="tranche_age" name="tranche_age">
-        <option value="10-15" <?php if($tranche_age == "10-15"){ echo "selected";}?> >0 - 10 ans</option>
-        <option value="10-18"  <?php if($tranche_age == "10-18"){ echo "selected";}?>>10 - 18 ans</option>
-        <option value="18-35" <?php if($tranche_age == "18-35"){ echo "selected";}?>>18 - 35 ans</option>
-        <option value="35-45" <?php if($tranche_age == "35-45"){ echo "selected";}?>>35 - 45 ans</option>
-        <option value="45-65" <?php if($tranche_age == "45-65"){ echo "selected";}?>>45 - 65 ans</option>
-        <option value="65+" <?php if($tranche_age == "65+"){ echo "selected";}?>>65 ans et plus</option>
+    <select class="form-control" id="tranche_age" name="tranche_age_id">
+        <option value="1" <?php if($tranche_age == "1"){ echo "selected";}?> >0 - 10 ans</option>
+        <option value="2"  <?php if($tranche_age == "2"){ echo "selected";}?>>10 - 18 ans</option>
+        <option value="3" <?php if($tranche_age == "3"){ echo "selected";}?>>18 - 35 ans</option>
+        <option value="4" <?php if($tranche_age == "4"){ echo "selected";}?>>35 - 45 ans</option>
+        <option value="5" <?php if($tranche_age == "5"){ echo "selected";}?>>45 - 65 ans</option>
+        <option value="6" <?php if($tranche_age == "6"){ echo "selected";}?>>65 ans et plus</option>
     </select>
 </div>
             <div class="form-group">
@@ -152,10 +118,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </div>
 <div class="form-group">
     <label for="statut">Statut:</label>
-    <select class="form-control" id="statut" name="statut">
-        <option value="Chef de quartier" <?php if($statut == "Chef de quartier"){ echo "selected";}?>>Chef de quartier</option>
-        <option value="Civile" <?php if($statut == "Civile"){ echo "selected";}?>  >Civile</option>
-        <option value="Badian gokh" <?php if($statut == "Badian gokh"){ echo "selected";}?> >Badian gokh</option>
+    <select class="form-control" id="statut" name="id_status">
+        <option value="1" <?php if($statut == "1"){ echo "selected";}?>>Chef de quartier</option>
+        <option value="2" <?php if($statut == "2"){ echo "selected";}?>  >Civile</option>
+        <option value="3" <?php if($statut == "3"){ echo "selected";}?> >Badian gokh</option>
     </select>
 </div>
             <button type="submit" class="btn btn-primary">Modifier</button>

@@ -10,11 +10,12 @@ class Member implements CRUD{
     private $sexe;
     private $situation_matrimoniale;
     private $statut;
+    private $etat;
     private $connexion;
 
 
     //Le constructeur avec ses paramétres
-    public function __construct($connexion,$first_name, $last_name,$matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut){
+    public function __construct($connexion,$first_name, $last_name,$matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut,$etat){
         $this->first_name = $first_name;
         $this->last_name = $last_name;
         $this->matricule = $matricule;
@@ -22,6 +23,7 @@ class Member implements CRUD{
         $this->sexe = $sexe;
         $this->situation_matrimoniale = $situation_matrimoniale;
         $this->statut = $statut;
+        $this->etat = $etat;
         $this->connexion = $connexion;
     }
     public function getFirst_name() {
@@ -47,8 +49,8 @@ class Member implements CRUD{
     }
 
     //Déclaration des méthodes
-    public function addMember($first_name, $last_name, $matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut){
-        $sql = "INSERT INTO Member (first_name, last_name, matricule, tranche_age, sexe, situation_matrimoniale, statut) VALUES (:first_name, :last_name, :matricule, :tranche_age, :sexe, :situation_matrimoniale, :statut)";
+    public function addMember($first_name, $last_name, $matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut,$etat){
+        $sql = "INSERT INTO Member (first_name, last_name, matricule, tranche_age, sexe, situation_matrimoniale, statut,etat) VALUES (:first_name, :last_name, :matricule, :tranche_age, :sexe, :situation_matrimoniale, :statut ,:etat)";
     
         //Préparation de la requête
         try {
@@ -61,7 +63,9 @@ class Member implements CRUD{
             $requete->bindParam(':tranche_age', $tranche_age, PDO::PARAM_STR); // Spécifier le type de paramètre
             $requete->bindParam(':sexe', $sexe);
             $requete->bindParam(':situation_matrimoniale', $situation_matrimoniale);
-            $requete->bindParam(':statut', $statut);
+            $requete->bindParam(':id_status', $statut);
+            $requete->bindParam(':id_etat', $etat);
+    
     
             //Exécution de la requête
             $requete->execute();
@@ -90,11 +94,10 @@ class Member implements CRUD{
         }
     
     
-        public function updateMember($id, $first_name, $last_name, $matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut) {
+        public function updateMember($id, $first_name, $last_name, $matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut,$etat) {
             try {
                 // Requête SQL UPDATE pour mettre à jour les informations du membre
-                $sql = "UPDATE Member SET first_name = :first_name, last_name = :last_name, matricule = :matricule, tranche_age = :tranche_age, sexe = :sexe, situation_matrimoniale = :situation_matrimoniale, statut = :statut WHERE id = :id";
-        
+                $sql = "UPDATE Member SET first_name = :first_name, last_name = :last_name, matricule = :matricule, tranche_age_id = :tranche_age_id, sexe = :sexe, situation_matrimoniale = :situation_matrimoniale, id_status = :id_status, id_etat=:id_etat WHERE id = :id";        
                 // Préparation de la requête
                 $stmt = $this->connexion->prepare($sql);
         
@@ -102,10 +105,11 @@ class Member implements CRUD{
                 $stmt->bindParam(':first_name', $first_name);
                 $stmt->bindParam(':last_name', $last_name);
                 $stmt->bindParam(':matricule', $matricule);
-                $stmt->bindParam(':tranche_age', $tranche_age);
+                $stmt->bindParam(':tranche_age_id', $tranche_age);
                 $stmt->bindParam(':sexe', $sexe);
                 $stmt->bindParam(':situation_matrimoniale', $situation_matrimoniale);
-                $stmt->bindParam(':statut', $statut);
+                $stmt->bindParam(':id_status', $statut);
+                $stmt->bindParam(':id_etat', $etat);
                 $stmt->bindParam(':id', $id);
         
                 // Exécution de la requête
