@@ -1,23 +1,74 @@
 
 <?php
-
-//Inclusion de la page de configuration et de la page member et du header
+// Inclusion des fichiers nécessaires
 require_once 'header.php';
 require_once 'config.php';
+// Vérifions si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-//Récupération des données du formulaire
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $matricule = $_POST['matricule'];
-    $tranche_age = $_POST['tranche_age_id'];
-    $sexe = $_POST['sexe'];
-    $situation_matrimoniale = $_POST['situation_matrimoniale'];
-    $statut = $_POST['id_status'];
-    $etat = $_POST['id_etat'];
-        //Appel de la methode addMember
-        $member->addMember($first_name,$last_name,$matricule,$tranche_age,$sexe,$situation_matrimoniale,$statut,$etat);
+    // Initialisation du message d'erreur
+    $error_message = "";
+
+    // Validation du prénom
+    $first_name = trim($_POST['first_name']); // Supprime les espaces au début et à la fin de la chaîne
+    if (!preg_match('/^[a-zA-Z\s]+$/', $first_name)) {
+        $error_message .= "Le prénom ne doit contenir que des lettres et des espaces.<br>";
+    }
+
+    // Validation du nom
+    $last_name = trim($_POST['last_name']);
+    if (!preg_match('/^[a-zA-Z\s]+$/', $last_name)) {
+        $error_message .= "Le nom ne doit contenir que des lettres et des espaces.<br>";
+    }
+
+    // Validation du matricule
+    $matricule = trim($_POST['matricule']);
+    if (!preg_match('/^[a-zA-Z0-9]+$/', $matricule)) {
+        $error_message .= "Le matricule ne doit contenir que des lettres et des chiffres.<br>";
+    }
+
+    // Validation de la tranche d'âge
+    $tranche_age = filter_var($_POST['tranche_age_id'], FILTER_VALIDATE_INT, array('options' => array('min_range' => 1, 'max_range' => 6)));
+    if ($tranche_age === false) {
+        $error_message .= "La tranche d'âge sélectionnée n'est pas valide.<br>";
+    }
+
+    // Validation du sexe
+    $sexe = trim($_POST['sexe']);
+    if (!in_array($sexe, array('Masculin', 'Féminin'))) {
+        $error_message .= "Le sexe sélectionné n'est pas valide.<br>";
+    }
+
+    // Validation de la situation matrimoniale
+    $situation_matrimoniale = trim($_POST['situation_matrimoniale']);
+    $valid_situations = array('Célibataire', 'Marié(e)', 'Divorcé(e)', 'Veuf(e)');
+    if (!in_array($situation_matrimoniale, $valid_situations)) {
+        $error_message .= "La situation matrimoniale sélectionnée n'est pas valide.<br>";
+    }
+
+    // Validation du statut
+    $statut = filter_var($_POST['id_status'], FILTER_VALIDATE_INT);
+    if ($statut === false) {
+        $error_message .= "Le statut sélectionné n'est pas valide.<br>";
+    }
+
+    // Validation de l'état
+    $etat = filter_var($_POST['id_etat'], FILTER_VALIDATE_INT);
+    if ($etat === false) {
+        $error_message .= "L'état sélectionné n'est pas valide.<br>";
+    }
+
+    // Si aucune erreur n'a été détectée, nous pouvons procéder à l'insertion des données
+    if (empty($error_message)) {
+        // Appel de la méthode addMember
+        $member->addMember($first_name, $last_name, $matricule, $tranche_age, $sexe, $situation_matrimoniale, $statut, $etat);
+    } else {
+        // Affichage du message d'erreur
+        echo "<div class='alert alert-danger'>$error_message</div>";
+    }
 }
 ?>
+
+<!-- Reste du code HTML pour le formulaire -->
 
 <!DOCTYPE html>
 <html lang="en">
