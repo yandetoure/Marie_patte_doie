@@ -9,10 +9,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $matricule = $_POST['matricule'];
-    $tranche_age = $_POST['tranche_age'];
+    $tranche_age = $_POST['tranche_age_id'];
     $sexe = $_POST['sexe'];
     $situation_matrimoniale = $_POST['situation_matrimoniale'];
-    $statut = $_POST['statut'];
+    $statut = $_POST['id_status'];
 
         //Appel de la methode addMember
         $member->addMember($first_name,$last_name,$matricule,$tranche_age,$sexe,$situation_matrimoniale,$statut);
@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
             <div class="form-group">
     <label for="tranche_age">Tranche d'âge:</label>
-    <select class="form-control" id="tranche_age" name="tranche_age">
+    <select class="form-control" id="tranche_age" name="tranche_age_id">
         <option value="10-15">0 - 10 ans</option>
         <option value="15-20">10 - 18 ans</option>
         <option value="18-35">18 - 35 ans</option>

@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $matricule = $_POST['matricule'];
-    $tranche_age = $_POST['tranche_age'];
+    $tranche_age = $_POST['tranche_age_id'];
     $sexe = $_POST['sexe'];
     $situation_matrimoniale = $_POST['situation_matrimoniale'];
     $statut = $_POST['statut'];
