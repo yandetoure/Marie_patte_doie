@@ -27,7 +27,7 @@ $matricule = generateMatricule($lastMatricule);
 // Vérifions si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // ... Code de validation et d'insertion de données ...
-    
+
 }
 
 // Vérifions si le formulaire a été soumis
@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
     // Validation de la tranche d'âge
-    $tranche_age = filter_var($_POST['tranche_age_id'], FILTER_VALIDATE_INT, array('options' => array('min_range' => 1, 'max_range' => 6)));
+    $tranche_age = filter_var($_POST['id_age'], FILTER_VALIDATE_INT, array('options' => array('min_range' => 1, 'max_range' => 6)));
     if ($tranche_age === false) {
         $error_message .= "La tranche d'âge sélectionnée n'est pas valide.<br>";
     }
@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // Validation du statut
-    $statut = filter_var($_POST['id_status'], FILTER_VALIDATE_INT);
+    $statut = filter_var($_POST['id_statut'], FILTER_VALIDATE_INT);
     if ($statut === false) {
         $error_message .= "Le statut sélectionné n'est pas valide.<br>";
     }
@@ -167,8 +167,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </select>
 </div>
 <div class="form-group">
-    <label for="statut">Statut:</label>
-    <select name="categorie" id="categorie">
+    <label for="id_statut">Statut:</label>
+    <select name="id_statut" id="id_statut">
             <?php
             // Connexion à la base de données
             $connexion = new mysqli('localhost', 'root', '', 'Townhall');

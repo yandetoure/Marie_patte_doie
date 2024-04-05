@@ -122,9 +122,9 @@ class Member implements CRUD {
             //Requête d'insertion
             // $sql= "SELECT * FROM Member";
             $sql = "SELECT * FROM Member
-            JOIN statuts ON (Member.id_status=statuts.id_status)
-            JOIN etats ON (Member.id_etat=etats.id_etat)
-            JOIN  tranche_ages ON (tranche_ages.tranche_age_id=Member.tranche_age_id);
+            JOIN Statut ON (Member.id_statut=Statut.id)
+            JOIN Etat ON (Member.id_etat=Etat.id)
+            JOIN  Tranche_age ON (Tranche_age.id = Member.id_age);
             ";
             //Préparation de la requête
             $stmt=$this->connexion->prepare($sql);
