@@ -22,23 +22,22 @@
         try {
             // Requête pour sélectionner tous les membres de la base de données
             $sql = "SELECT * FROM Member
-            JOIN Statut ON (Member.id_statut=Statut.id)
-            JOIN Etat ON (Member.id_etat=Etat.id)
-            JOIN  Tranche_age ON (Tranche_age.id = Member.id_age);
-            ";
-            $stmt = $connexion->prepare($sql);
-            $stmt->execute();
+                    JOIN Statut ON Member.id_statut = Statut.id
+                    JOIN Etat ON Member.id_etat = Etat.id
+                    JOIN Tranche_age ON Member.id_age = Tranche_age.id";
+                    $stmt = $connexion->prepare($sql);
+                    $stmt->execute();
                     // Vérifier si des membres sont retournés
                     if ($stmt->rowCount() > 0) {
                         // Afficher les membres dans des cartes Bootstrap
-                        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             echo '<div class="card membre-card mb-3">';
                             echo '<div class="card-body">';
                             echo '<h5 class="card-title">' . $row['first_name'] . ' ' . $row['last_name'] . '</h5>';
-                            echo '<p class="card-text">Statut: ' . $row['id_statut'] . '</p>';
-                            echo '<a href="update.php?id=' . $row['id'] . '" class="btn btn-primary">Modifier</a>';  
-                            echo '<a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger">Supprimer</a>';   
-                            echo '<a href="detail.php?id=' . $row['id'] . '" class="btn btn-info">Afficher plus</a>';             
+                            echo '<p class="card-text">Etat: ' . $row['matricule'] . '</p>';
+                            echo '<a href="update.php?id=' . $row['id'] . '" class="btn btn-primary">Modifier</a>';
+                            echo '<a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger">Supprimer</a>';
+                            echo '<a href="detail.php?id=' . $row['id'] . '" class="btn btn-info">Afficher plus</a>';
                             echo '</div>';
                             echo '</div>';
                         }
