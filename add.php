@@ -26,13 +26,8 @@ $matricule = generateMatricule($lastMatricule);
 
 // Vérifions si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $sexe = $_POST['sexe'];
-    $situation_matrimoniale = $_POST['situation_matrimoniale'];
-    $id_statut = $_POST['statut'];
-    $id_etat = $_POST['etat'];
-    $id_age = $_POST['id_age'];
+    // ... Code de validation et d'insertion de données ...
+
 }
 
 // Vérifions si le formulaire a été soumis
@@ -53,7 +48,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
 
-
+    // Validation de la tranche d'âge
+    $tranche_age = filter_var($_POST['id_age'], FILTER_VALIDATE_INT, array('options' => array('min_range' => 1, 'max_range' => 6)));
+    if ($tranche_age === false) {
+        $error_message .= "La tranche d'âge sélectionnée n'est pas valide.<br>";
+    }
 
     // Validation du sexe
     $sexe = trim($_POST['sexe']);
@@ -68,7 +67,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $error_message .= "La situation matrimoniale sélectionnée n'est pas valide.<br>";
     }
 
- 
+    // Validation du statut
+    $statut = filter_var($_POST['id_statut'], FILTER_VALIDATE_INT);
+    if ($statut === false) {
+        $error_message .= "Le statut sélectionné n'est pas valide.<br>";
+    }
+
+    // Validation de l'état
+    $etat = filter_var($_POST['id_etat'], FILTER_VALIDATE_INT);
+    if ($etat === false) {
+        $error_message .= "L'état sélectionné n'est pas valide.<br>";
+    }
 
     // Si aucune erreur n'a été détectée, nous pouvons procéder à l'insertion des données
     if (empty($error_message)) {
@@ -110,8 +119,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <input type="text" class="form-control" id="last_name" name="last_name">
             </div>
             <div class="form-group">
-    <label for="id_age">Tranche d'âge:</label>       
-     <select name="id_age" id="id_age">
+    <label for="id_age">Tranche d'âge:</label>        
+    
+    <select name="id_age" id="id_age">
             <?php
             // Connexion à la base de données
             $connexion = new mysqli('localhost', 'root', '', 'Townhall');
@@ -157,25 +167,76 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </select>
 </div>
 <div class="form-group">
-    <label for="statut">Statut:</label>
-    <select class="form-control" id="statut" name="id_status">
-        <option value="1">Chef de quartier</option>
-        <option value="2">Civile</option>
-        <option value="3">Badian gokh</option>
-        <option value="4">Délégué de quartier</option>
-    </select>
+    <label for="id_statut">Statut:</label>
+    <select name="id_statut" id="id_statut">
+            <?php
+            // Connexion à la base de données
+            $connexion = new mysqli('localhost', 'root', '', 'Townhall');
+
+            // Vérifier la connexion
+            if ($connexion->connect_error) {
+                die("La connexion à la base de données a échoué : " . $connexion->connect_error);
+            }
+
+            // Requête pour récupérer les catégories depuis la base de données
+            $requete = "SELECT id, libelle FROM Statut";
+            $resultat = $connexion->query($requete);
+
+           if ($resultat) {
+    if ($resultat->num_rows > 0) {
+        // Parcourir les résultats et afficher chaque catégorie comme une option dans le menu déroulant
+        while ($row = $resultat->fetch_assoc()) {
+            echo "<option value='" . $row['id'] . "'>" . $row['libelle'] . "</option>";
+        }
+    } else {
+        echo "<option>Aucune catégorie disponible</option>";
+    }
+} else {
+    echo "Erreur lors de l'exécution de la requête : " . $connexion->error;
+}
+            ?>
+        </select>
 </div>
 
 <div class="form-group">
-    <label for="statut">etat:</label>
-    <select class="form-control" id="statut" name="id_etat">
-        <option value="1">Chômeur</option>
-        <option value="2">Etudiant</option>
-        <option value="3">Fonctionnaire</option>
-        <option value="4">Secteur informel</option>
+    <label for="id_etat">Etat:</label>
+    <select name="id_etat" id="id_etat">
+            <?php
+            // Connexion à la base de données
+            $connexion = new mysqli('localhost', 'root', '', 'Townhall');
+
+            // Vérifier la connexion
+            if ($connexion->connect_error) {
+                die("La connexion à la base de données a échoué : " . $connexion->connect_error);
+            }
+
+            // Requête pour récupérer les catégories depuis la base de données
+            $requete = "SELECT id, libelle FROM Etat";
+            $resultat = $connexion->query($requete);
+
+           if ($resultat) {
+    if ($resultat->num_rows > 0) {
+        // Parcourir les résultats et afficher chaque catégorie comme une option dans le menu déroulant
+        while ($row = $resultat->fetch_assoc()) {
+            echo "<option value='" . $row['id'] . "'>" . $row['libelle'] . "</option>";
+        }
+    } else {
+        echo "<option>Aucune catégorie disponible</option>";
+    }
+} else {
+    echo "Erreur lors de l'exécution de la requête : " . $connexion->error;
+}
+            ?>
     </select>
 </div> 
 
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+        </form>
+    </div>
+</body>
+</html>
+
+            <!-- Reste des champs du formulaire -->
             <button type="submit" class="btn btn-primary">Ajouter</button>
         </form>
     </div>
