@@ -22,9 +22,9 @@
         try {
             // Requête pour sélectionner tous les membres de la base de données
             $sql = "SELECT * FROM Member
-            JOIN statuts ON (Member.id_status=statuts.id_status)
-            JOIN etats ON (Member.id_etat=etats.id_etat)
-            JOIN  tranche_ages ON (tranche_ages.tranche_age_id=Member.tranche_age_id);
+            JOIN Statut ON (Member.id_statut=Statut.id)
+            JOIN Etat ON (Member.id_etat=Etat.id)
+            JOIN  Tranche_age ON (Tranche_age.id = Member.id_age);
             ";
             $stmt = $connexion->prepare($sql);
             $stmt->execute();
@@ -35,7 +35,7 @@
                             echo '<div class="card membre-card mb-3">';
                             echo '<div class="card-body">';
                             echo '<h5 class="card-title">' . $row['first_name'] . ' ' . $row['last_name'] . '</h5>';
-                            echo '<p class="card-text">Statut: ' . $row['statut'] . '</p>';
+                            echo '<p class="card-text">Statut: ' . $row['id_statut'] . '</p>';
                             echo '<a href="update.php?id=' . $row['id'] . '" class="btn btn-primary">Modifier</a>';  
                             echo '<a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger">Supprimer</a>';   
                             echo '<a href="detail.php?id=' . $row['id'] . '" class="btn btn-info">Afficher plus</a>';             

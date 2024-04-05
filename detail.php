@@ -63,10 +63,9 @@ if(isset($_GET['id'])){
             // Requête pour sélectionner tous les membres de la base de données
             // $sql = "SELECT * FROM Member WHERE id = :id";
             $sql = "SELECT * FROM Member
-            JOIN statuts ON (Member.id_status=statuts.id_status)
-            JOIN etats ON (Member.id_etat=etats.id_etat)
-            JOIN  tranche_ages ON (tranche_ages.tranche_age_id=Member.tranche_age_id)
-            WHERE id = :id  
+            JOIN Statut ON (Member.id_statut=Statut.id)
+            JOIN Etat ON (Member.id_etat=Etat.id)
+            JOIN  Tranche_age ON (Tranche_age.id = Member.id_age);
             ";
             $stmt = $connexion->prepare($sql);
              $stmt->bindParam(':id',$id, PDO::PARAM_INT);
@@ -81,7 +80,7 @@ if(isset($_GET['id'])){
                     echo '<div class="card-body">';
                     echo '<h5 class="card-title"  > Prenom : <strong> ' . $row['first_name'] . ' </strong> </h5>';
                     echo '<h5 class="card-title"  > Nom : '  . $row['last_name'] . '</h5>';
-                    echo '<p class="card-text"Tranche d\'âge : >Tranche d\'âge: ' . $row['tranche_age'] . '</p>';
+                    echo '<p class="card-text"Tranche d\'âge : >Tranche d\'âge: ' . $row['libell'] . '</p>';
                     echo '<p class="card-text">Sexe: ' . $row['sexe'] . '</p>';
                     echo '<p class="card-text"Situation matrimoniale : >Situation matrimoniale: ' . $row['situation_matrimoniale'] . '</p>';
                     echo '<p class="card-text"Stutu :>Statut: ' . $row['statut'] . '</p>';
