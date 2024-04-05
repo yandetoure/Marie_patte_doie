@@ -5,7 +5,7 @@ require_once 'member.php';
 $host ="localhost";
 $user="root";
 $pass= "";
-$db = "Town_hall";
+$db = "Townhall";
 
 try{
     
@@ -24,6 +24,7 @@ try{
     $member = new Member ($connexion, $first_name, $last_name,$matricule,$tranche_age,$situation_matrimoniale,$sexe,$statut,$etat);
     $resultat = $member->readMember();
 
+    
 } catch (PDOException $e) {
     die("Erreur de la connexion à la base de données : ".$e->getMessage());
 }

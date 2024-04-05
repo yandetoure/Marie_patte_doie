@@ -26,7 +26,13 @@ $matricule = generateMatricule($lastMatricule);
 
 // Vérifions si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // ... votre code de validation et d'insertion de données ...
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $sexe = $_POST['sexe'];
+    $situation_matrimoniale = $_POST['situation_matrimoniale'];
+    $id_statut = $_POST['statut'];
+    $id_etat = $_POST['etat'];
+    $id_age = $_POST['id_age'];
 }
 
 // Vérifions si le formulaire a été soumis
@@ -46,17 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $error_message .= "Le nom ne doit contenir que des lettres et des espaces.<br>";
     }
 
-    // Validation du matricule
-    $matricule = trim($_POST['matricule']);
-    if (!preg_match('/^[a-zA-Z0-9]+$/', $matricule)) {
-        $error_message .= "Le matricule ne doit contenir que des lettres et des chiffres.<br>";
-    }
 
-    // Validation de la tranche d'âge
-    $tranche_age = filter_var($_POST['tranche_age_id'], FILTER_VALIDATE_INT, array('options' => array('min_range' => 1, 'max_range' => 6)));
-    if ($tranche_age === false) {
-        $error_message .= "La tranche d'âge sélectionnée n'est pas valide.<br>";
-    }
+
 
     // Validation du sexe
     $sexe = trim($_POST['sexe']);
@@ -71,17 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $error_message .= "La situation matrimoniale sélectionnée n'est pas valide.<br>";
     }
 
-    // Validation du statut
-    $statut = filter_var($_POST['id_status'], FILTER_VALIDATE_INT);
-    if ($statut === false) {
-        $error_message .= "Le statut sélectionné n'est pas valide.<br>";
-    }
-
-    // Validation de l'état
-    $etat = filter_var($_POST['id_etat'], FILTER_VALIDATE_INT);
-    if ($etat === false) {
-        $error_message .= "L'état sélectionné n'est pas valide.<br>";
-    }
+ 
 
     // Si aucune erreur n'a été détectée, nous pouvons procéder à l'insertion des données
     if (empty($error_message)) {
@@ -123,17 +110,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <input type="text" class="form-control" id="last_name" name="last_name">
             </div>
             <div class="form-group">
-    <label for="tranche_age">Tranche d'âge:</label>
-    <select class="form-control" id="tranche_age" name="tranche_age_id">
+    <label for="id_age">Tranche d'âge:</label>       
+     <select name="id_age" id="id_age">
+            <?php
+            // Connexion à la base de données
+            $connexion = new mysqli('localhost', 'root', '', 'Townhall');
 
-        <option value="1">0 - 10 ans</option>
-        <option value="2">10 - 15 ans</option>
-        <option value="3">15- 20 ans</option>
-        <option value="3">20- 35 ans</option>
-        <option value="4">35 - 45 ans</option>
-        <option value="5">45 - 65 ans</option>
-        <option value="6">65 ans et plus</option>
-    </select>
+            // Vérifier la connexion
+            if ($connexion->connect_error) {
+                die("La connexion à la base de données a échoué : " . $connexion->connect_error);
+            }
+
+            // Requête pour récupérer les catégories depuis la base de données
+            $requete = "SELECT id, libelle FROM Tranche_age";
+            $resultat = $connexion->query($requete);
+
+           if ($resultat) {
+    if ($resultat->num_rows > 0) {
+        // Parcourir les résultats et afficher chaque catégorie comme une option dans le menu déroulant
+        while ($row = $resultat->fetch_assoc()) {
+            echo "<option value='" . $row['id'] . "'>" . $row['libelle'] . "</option>";
+        }
+    } else {
+        echo "<option>Aucune catégorie disponible</option>";
+    }
+} else {
+    echo "Erreur lors de l'exécution de la requête : " . $connexion->error;
+}
+            ?>
+        </select>
 </div>
             <div class="form-group">
                 <label for="sexe">Sexe:</label>
