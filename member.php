@@ -80,7 +80,7 @@ class Member implements CRUD {
         try {
             $sql = "DELETE FROM Member WHERE id= :id";
             $stmt = $this->connexion->prepare($sql);
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->bindParam(':id', $_GET['id'], PDO::PARAM_INT);
             $stmt->execute();
             header('location:index.php');
         } catch (PDOException $e) {

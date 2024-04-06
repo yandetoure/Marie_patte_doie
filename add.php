@@ -4,25 +4,8 @@
 require_once 'header.php';
 require_once 'config.php';
 
-// Fonction pour générer la matricule
-function generateMatricule($lastMatricule) {
-    // Récupération du numéro de la dernière matricule
-    $lastNumber = intval(substr($lastMatricule, 3)); // Extrait le nombre de la matricule
-
-    // Incrémentation du numéro
-    $newNumber = $lastNumber + 1;
-
-    // Formatage du nouveau numéro
-    $newMatricule = "PO_" . str_pad($newNumber, 3, "0", STR_PAD_LEFT); // Remplit de zéros à gauche si nécessaire
-
-    return $newMatricule;
-}
-
-// Obtention de la dernière matricule de la base de données (exemple)
-$lastMatricule = "PO_005"; // Supposons que la dernière matricule est PO_005
-
-// Génération de la nouvelle matricule
-$matricule = generateMatricule($lastMatricule);
+function getNextMatricule($connexion) { return 'PO_' . str_pad(($connexion->query("SELECT MAX(CAST(REPLACE(matricule, 'PO_', '') AS UNSIGNED)) + 1 FROM Member")->fetchColumn() ?: 1), 3, '0', STR_PAD_LEFT); }
+$matricule=getNextMatricule($connexion);
 
 // Vérifions si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
