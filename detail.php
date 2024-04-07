@@ -20,14 +20,14 @@ require_once 'header.php';
             <div class="text-center">
                 <?php
                 try {
-                    $id=$_GET['id'];
+                    // $id=$_GET['id'];
                     // Requête pour sélectionner tous les membres de la base de données
                     $sql = "SELECT *,Member.id FROM Member 
                     JOIN Statut ON Member.id_statut = Statut.id
                     JOIN Etat ON Member.id_etat = Etat.id
                     JOIN Tranche_age ON Member.id_age = Tranche_age.id WHERE Member.id = :id";
                     $stmt = $connexion->prepare($sql);
-                    $stmt->bindParam('id',$id, PDO::PARAM_INT);
+                    $stmt->bindParam('id',$_GET['id'], PDO::PARAM_INT);
                     $stmt->execute();
                     // Vérifier si des membres sont retournés
                     if ($stmt->rowCount() > 0) {
