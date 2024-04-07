@@ -92,7 +92,7 @@ class Member implements CRUD {
         public function updateMember($id, $first_name, $last_name, $matricule, $id_age, $sexe, $situation_matrimoniale, $id_statut,$id_etat) {
             try {
                 // Requête SQL UPDATE pour mettre à jour les informations du membre
-                $sql = "UPDATE Member SET first_name = :first_name, last_name = :last_name, matricule = :matricule, d_age = :tranche_age_id, sexe = :sexe, situation_matrimoniale = :situation_matrimoniale, id_statut = :id_statut, id_etat=:id_etat WHERE id = :id";        
+                $sql = "UPDATE Member SET first_name = :first_name, last_name = :last_name, matricule = :matricule, id_age = :id_age, sexe = :sexe, situation_matrimoniale = :situation_matrimoniale, id_statut = :id_statut, id_etat = :id_etat WHERE id = :id";        
                 // Préparation de la requête
                 $stmt = $this->connexion->prepare($sql);
         
@@ -100,7 +100,7 @@ class Member implements CRUD {
                 $stmt->bindParam(':first_name', $first_name);
                 $stmt->bindParam(':last_name', $last_name);
                 $stmt->bindParam(':matricule', $matricule);
-                $stmt->bindParam(':idèage', $id_age);
+                $stmt->bindParam(':id_age', $id_age);
                 $stmt->bindParam(':sexe', $sexe);
                 $stmt->bindParam(':situation_matrimoniale', $situation_matrimoniale);
                 $stmt->bindParam(':id_statut', $id_statut);
@@ -110,7 +110,7 @@ class Member implements CRUD {
                 // Exécution de la requête
                 $stmt->execute();
                 // Redirection vers la page index.php après la mise à jour
-                header("Location: index.php");
+                header("location: index.php");
                 exit();
             } catch (PDOException $e) {
                 echo "Erreur lors de la mise à jour de l'enregistrement : " . $e->getMessage();
