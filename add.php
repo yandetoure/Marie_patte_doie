@@ -4,7 +4,9 @@
 require_once 'header.php';
 require_once 'config.php';
 
-function getNextMatricule($connexion) { return 'PO_' . str_pad(($connexion->query("SELECT MAX(CAST(REPLACE(matricule, 'PO_', '') AS UNSIGNED)) + 1 FROM Member")->fetchColumn() ?: 1), 3, '0', STR_PAD_LEFT); }
+function getNextMatricule($connexion) { 
+    return 'PO_' . str_pad(($connexion->query("SELECT MAX(CAST(REPLACE(matricule, 'PO_', '') 
+    AS UNSIGNED)) + 1 FROM Member")->fetchColumn() ?: 1), 3, '0', STR_PAD_LEFT); }
 $matricule=getNextMatricule($connexion);
 
 // Vérifions si le formulaire a été soumis
