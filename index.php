@@ -34,9 +34,9 @@
                             echo '<div class="card membre-card mb-3">';
                             echo '<div class="card-body">';
                             echo '<h5 class="card-title">' . $row['first_name'] . ' ' . $row['last_name'] . '</h5>';
-                            echo '<p class="card-text">Etat: ' . $row['matricule'] . '</p>';
-                            echo '<a href="update.php?id=' . $row['id'] . '" class="btn btn-primary">Modifier</a>';
-                            echo '<a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger">Supprimer</a>';
+                            echo '<p class="card-text">Matricule: ' . $row['matricule'] . '</p>';
+                            echo '<a href="update.php?id=' . $row['member'] . '" class="btn btn-primary">Modifier</a>';
+                            echo '<a href="delete.php?id=' . $row['member'] . '" class="btn btn-danger">Supprimer</a>';
                             echo '<a href="detail.php?id=' . $row['member'] . '" class="btn btn-info">Afficher plus</a>';
                             echo '</div>';
                             echo '</div>';
